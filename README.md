@@ -33,10 +33,11 @@ To simplify access to the server folders, you can create a link directly from th
 3) `server` - server directory, `data` - server data directory
 
 ## How quick installation mods
-1) Run `su -` (change to root user)
-2) Run `cd /var/lib/docker/volumes/vintage_story_server/_data/data/Mods`
-3) Run `wget <full_url_download_mod>` ATTENTION! replace [full_url_download_server_archive_tar](https://mods.vintagestory.at/list/mod) to choose needle mod
-4) Restart container `sudo docker restart vintage_story_server`
+1) Run `sudo docker exec -it vintage_story_server bash`
+2) Run `cd /var/vintage_story/data/Mods`
+3) Run `wget <full_url_download_mod>` ATTENTION! replace [full_url_download_server_archive_tar](https://mods.vintagestory.at/list/mod) to choose needle mod (repeat for all mods)
+4) Run `exit`
+5) Restart container `sudo docker restart vintage_story_server`
 
 ## WHERE PLACED BACKUPS
 1) Run `su -`
