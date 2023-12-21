@@ -4,6 +4,8 @@
 ![GitHub issues](https://img.shields.io/github/issues/BarenAD/docker_vintage_story)
 ![Logotype](./src/assets/git/vs_logo.png)
 
+# ATTENTION! Bugs have been found on some mods. They are not in the ubuntu branch. She's in the docker hub right now. But automatic backups do not work in it.
+
 # min support version 1.18.8
 
 # DOCUMENTATION
