@@ -4,6 +4,7 @@
 ![GitHub issues](https://img.shields.io/github/issues/BarenAD/docker_vintage_story)
 ![Logotype](./src/assets/git/vs_logo.png)
 
+# min support version 1.18.8
 
 # DOCUMENTATION
 Choose needle branch on git. (any - all versions, manual install server, check only `.NET` version) or (specific version, automatically install)
