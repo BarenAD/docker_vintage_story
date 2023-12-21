@@ -9,8 +9,8 @@
 Choose needle branch on git. (any - all versions, manual install server, check only `.NET` version) or (specific version, automatically install)
 
 ## BASE PARAMS
-1) Count backups: 5 `see /src/scripts/vs_crontab [countDays][6 line]`
-2) Frequency backups: every day 00:00 `see /src/scripts/vs_backup [3 line]`
+1) Count backups: 5 `see /src/scripts/vs_backup [countDays][6 line]`
+2) Frequency backups: every day 00:00 `see /src/scripts/vs_crontab [3 line]`
 3) Port: 42420
 
 ## REQUIREMENTS
