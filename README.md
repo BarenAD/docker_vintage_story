@@ -36,7 +36,7 @@ To simplify access to the server folders, you can create a link directly from th
 ## How quick installation mods
 1) Run `sudo docker exec -it vintage_story_server bash`
 2) Run `cd /var/vintage_story/data/Mods`
-3) Run `wget <full_url_download_mod>` ATTENTION! replace [full_url_download_server_archive_tar](https://mods.vintagestory.at/list/mod) to choose needle mod (repeat for all mods)
+3) Run `wget -O <name_archive.zip> <full_url_download_mod>` ATTENTION! replace [full_url_download_server_archive_tar](https://mods.vintagestory.at/list/mod) and [name_archive.zip] to choose needle mod (repeat for all mods)
 4) Run `exit`
 5) Restart container `sudo docker restart vintage_story_server`
 
