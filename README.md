@@ -39,6 +39,9 @@ To simplify access to the server folders, you can create a link directly from th
 4) Run `exit`
 5) Restart container `sudo docker restart vintage_story_server`
 
+## IMMDIATE BACKUP
+1) Run `sudo docker exec -it vintage_story_server vs_backup`
+
 ## WHERE PLACED BACKUPS
 1) Run `su -`
 2) Run `cd /var/lib/docker/volumes/vintage_story/_data/data/Backups`
