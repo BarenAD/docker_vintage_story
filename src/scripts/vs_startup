@@ -1,0 +1,28 @@
+#!/bin/sh
+
+cleanup() {
+    echo "Container stopped, performing cleanup..."
+    bash $SERVER_PATH/server.sh stop
+}
+
+if [ ! -f $SERVER_PATH/server.sh ]; then
+    echo "Server runtime is missing. Download server with use 'sudo docker exec vintage_story_server bash -c \"vs_update <url_to_download_server.tar.gz>'\""
+    echo "and restart container"
+    sleep infinity & wait
+else
+    #Trap SIGTERM
+    trap 'true' SIGTERM
+    
+    supercronic ~/crontab &
+  
+    # Starts the server
+    bash $SERVER_PATH/server.sh start
+    
+    # Sleep to prevent a container stop
+    sleep infinity &
+    
+    wait
+    
+    #Cleanup
+    cleanup
+fi

@@ -1,0 +1,48 @@
+#!/bin/sh
+
+#First param - server download link
+
+if [ -z "$1" ]; then
+
+	echo "URL params is empty. call update.sh <URL_FOR_DOWNLOAD_ARCHIVE_TAR_GZ>"
+	exit
+
+fi
+
+echo "Start updating server..."
+
+if [ -f $SERVER_PATH/server.sh ]; then
+
+	echo "Stopping server..."
+
+	bash $SERVER_PATH/server.sh stop
+
+fi
+
+echo "Cleanup server directory"
+
+rm -rf $SERVER_PATH/*
+
+echo "Download server"
+
+wget -O /tmp/server.tar.gz $1
+
+echo "Extract server"
+
+tar -xzf /tmp/server.tar.gz -C $SERVER_PATH
+
+echo "Change grants"
+
+chmod +x $SERVER_PATH/server.sh
+
+echo "Change path for server.sh"
+
+sed -i -e "s/USERNAME='vintagestory'/USERNAME='$SERVER_USER'/g" $SERVER_PATH/server.sh
+sed -i -e "s/VSPATH='\/home\/vintagestory\/server'/VSPATH='$SCREENING_SERVER_PATH'/g" $SERVER_PATH/server.sh
+sed -i -e "s/DATAPATH='\/var\/vintagestory\/data'/DATAPATH='$SCREENING_DATA_PATH'/g" $SERVER_PATH/server.sh
+
+echo "Cleanup tmp directory"
+
+rm -rf /tmp/*
+
+echo "Successfully updated server!"

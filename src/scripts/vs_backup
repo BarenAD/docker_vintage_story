@@ -1,0 +1,28 @@
+#!/bin/sh
+
+#First param - path to server
+#Second params - path to server data
+
+countDays=5
+currentDate=$(date +%d_%m_%y)
+arhiveName="vs_server_backup_${currentDate}.tar.gz"
+
+echo "Start prepared backup server..."
+
+bash $SERVER_PATH/server.sh command genbackup latest.vcbds
+
+sleep 3 #for bebeautiful output :) 
+
+echo "Compress backup file..."
+
+tar -zcvf $DATA_PATH/Backups/$arhiveName $DATA_PATH/Backups/latest.vcbds
+
+echo "Cleanup old backups"
+
+find $DATA_PATH/Backups -type f -mtime +$countDays -print0 | xargs -0 rm -f
+
+echo "Cleanup latest backup temp file"
+
+rm -f $DATA_PATH/Backups/latest.vcbds
+
+echo "Successfully backuped"
