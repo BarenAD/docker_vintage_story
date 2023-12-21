@@ -45,7 +45,7 @@ To simplify access to the server folders, you can create a link directly from th
 
 ## WHERE PLACED BACKUPS
 1) Run `su -`
-2) Run `cd /var/lib/docker/volumes/vintage_story/_data/data/Backups`
+2) Run `cd /var/lib/docker/volumes/vintage_story_server/_data/data/Backups`
 
 ### HOW TO GET INSIDE CONTAINER
 1) Run `sudo docker exec -it vintage_story_server bash`
