@@ -28,7 +28,7 @@ Choose needed branch on git. (any - all versions, manual install server, check o
 ## Link to volume
 To simplify access to the server folders, you can create a link directly from the root directory of the user
 1) Run `sudo ln -s /var/lib/docker/volumes /root/docker_volumes`
-2) Done! Now you can replace all paths `/var/lib/docker/volumes/vintage_story_server` -> `~/docker_volumes` (root user)
+2) Done! Now you can replace all paths `/var/lib/docker/volumes` -> `~/docker_volumes` (root user)
 
 ## How to get to the volume (server directories)
 1) Run `su -` (change to root user)
