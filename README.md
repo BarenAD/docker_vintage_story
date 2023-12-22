@@ -25,7 +25,7 @@ Choose needed branch on git. (any - all versions, manual install server, check o
 3) Run `sudo docker restart vintage_story_server`
 4) Done! Now you can connect to the server. Or make the settings and install the necessary mods.
 
-## Link to volume
+## LINK TO VOLUMES
 To simplify access to the server folders, you can create a link directly from the root directory of the user
 1) Run `sudo ln -s /var/lib/docker/volumes /root/docker_volumes`
 2) Done! Now you can replace all paths `/var/lib/docker/volumes` -> `~/docker_volumes` (root user)
@@ -35,7 +35,7 @@ To simplify access to the server folders, you can create a link directly from th
 2) Run `cd /var/lib/docker/volumes/vintage_story_server/_data`
 3) `server` - server directory, `data` - server data directory
 
-## How quick installation mods
+## QUICK INSTALL MODS
 1) Run `sudo docker exec -it vintage_story_server bash`
 2) Run `cd /var/vintage_story/data/Mods`
 3) Run `wget -O <name_archive.zip> <full_url_download_mod>` ATTENTION! replace [full_url_download_server_archive_tar](https://mods.vintagestory.at/list/mod) and [name_archive.zip] to choose needed mod (repeat for all mods)
@@ -71,5 +71,5 @@ To simplify access to the server folders, you can create a link directly from th
 ### HOW TO GET INSIDE CONTAINER
 1) Run `attach.sh`
 
-#### Convenient manager and editor
+#### CONVENIENT MANAGER AND EDITOR
 1) [MC](https://midnight-commander.org/)
