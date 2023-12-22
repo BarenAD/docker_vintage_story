@@ -2,9 +2,12 @@ FROM alpine:latest
 
 ENV VS_SERVER_USER='vintagestory'
 
-ENV VS_BACKUPS_AGE_LIMIT=5				#days
-ENV VS_BACKUPS_DATE_FORMAT="%dd-%mm-%Y_%H:%M:%S"	#format date for backups
-ENV VS_BACKUP_PERIODICITY="0 0 * * *"			#crontab format value
+#days
+ENV VS_BACKUPS_AGE_LIMIT=5
+#format date for backups
+ENV VS_BACKUPS_DATE_FORMAT="%dd-%mm-%Y_%H:%M:%S"
+#crontab format value
+ENV VS_BACKUP_PERIODICITY="0 0 * * *"
 
 ENV VS_PROJECT_PATH="/var/vintage_story"
 ENV VS_SERVER_PATH="${VS_PROJECT_PATH}/server"
