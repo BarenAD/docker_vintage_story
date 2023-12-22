@@ -25,7 +25,7 @@ COPY ./dist/scripts.tar.gz /tmp/scripts.tar.gz
 
 WORKDIR /tmp
 
-RUN addgroup $VS_SERVER_USER && adduser -D -G $VS_SERVER_USER $VS_SERVER_USER && mkdir -p $VS_SERVER_PATH && mkdir -p $VS_DATA_PATH && mkdir -p $VS_SCRIPTS_PATH && tar -xzf /tmp/scripts.tar.gz -C $VS_SCRIPTS_PATH && rm -rf /tmp/* && chown -R $VS_SERVER_USER:$VS_SERVER_USER $VS_PROJECT_PATH && chmod -R +x $VS_SCRIPTS_PATH/* && $VS_SCRIPTS_PATH/vs_crontab && apk update --no-cache && apk --no-cache add supercronic bash procps tar screen wget gcompat aspnetcore7-runtime
+RUN addgroup $VS_SERVER_USER && adduser -D -G $VS_SERVER_USER $VS_SERVER_USER && mkdir -p $VS_SERVER_PATH && mkdir -p $VS_DATA_PATH && mkdir -p $VS_SCRIPTS_PATH && tar -xzf /tmp/scripts.tar.gz -C $VS_SCRIPTS_PATH && rm -rf /tmp/* && chown -R $VS_SERVER_USER:$VS_SERVER_USER $VS_PROJECT_PATH && chmod -R +x $VS_SCRIPTS_PATH/* && $VS_SCRIPTS_PATH/vs_crontab && apk update --no-cache && apk --no-cache add supercronic icu-libs krb5-libs libgcc libintl libstdc++ zlib libgdiplus openssl fontconfig busybox-suid bash procps tar screen wget gcompat aspnetcore7-runtime
 
 #icu-libs krb5-libs libgcc libintl libstdc++ zlib libgdiplus openssl fontconfig busybox-suid
 
