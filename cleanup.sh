@@ -6,7 +6,9 @@ rm -r ./dist
 
 echo "Cleanup container..."
 
-sudo docker stop vintage_story_server && docker rm vintage_story_server
+sudo docker stop vintage_story_server
+
+sudo docker rm vintage_story_server
 
 echo "Cleanup image..."
 
