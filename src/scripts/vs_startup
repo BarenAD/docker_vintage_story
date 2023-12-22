@@ -15,7 +15,7 @@ else
     
     supercronic ~/crontab &
   
-    bash $VS_SERVER_PATH/server.sh start
+    bash vs_server start
     
     sleep infinity &
     
