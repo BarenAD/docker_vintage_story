@@ -11,17 +11,17 @@ fi
 
 echo "Start updating server..."
 
-if [ -f $SERVER_PATH/server.sh ]; then
+if [ -f $VS_SERVER_PATH/server.sh ]; then
 
 	echo "Stopping server..."
 
-	bash $SERVER_PATH/server.sh stop
+	bash $VS_SERVER_PATH/server.sh stop
 
 fi
 
 echo "Cleanup server directory"
 
-rm -rf $SERVER_PATH/*
+rm -rf $VS_SERVER_PATH/*
 
 echo "Download server"
 
@@ -29,17 +29,17 @@ wget -O /tmp/server.tar.gz $1
 
 echo "Extract server"
 
-tar -xzf /tmp/server.tar.gz -C $SERVER_PATH
+tar -xzf /tmp/server.tar.gz -C $VS_SERVER_PATH
 
 echo "Change grants"
 
-chmod +x $SERVER_PATH/server.sh
+chmod +x $VS_SERVER_PATH/server.sh
 
 echo "Change path for server.sh"
 
-sed -i -e "s/USERNAME='vintagestory'/USERNAME='$SERVER_USER'/g" $SERVER_PATH/server.sh
-sed -i -e "s/VSPATH='\/home\/vintagestory\/server'/VSPATH='$SCREENING_SERVER_PATH'/g" $SERVER_PATH/server.sh
-sed -i -e "s/DATAPATH='\/var\/vintagestory\/data'/DATAPATH='$SCREENING_DATA_PATH'/g" $SERVER_PATH/server.sh
+sed -i -e "s/USERNAME='vintagestory'/USERNAME='$VS_SERVER_USER'/g" $VS_SERVER_PATH/server.sh
+sed -i -e "s/VSPATH='\/home\/vintagestory\/server'/VSPATH='$VS_SCREENING_SERVER_PATH'/g" $VS_SERVER_PATH/server.sh
+sed -i -e "s/DATAPATH='\/var\/vintagestory\/data'/DATAPATH='$VS_SCREENING_DATA_PATH'/g" $VS_SERVER_PATH/server.sh
 
 echo "Cleanup tmp directory"
 

@@ -4,7 +4,7 @@
 
 if [ -z "$1" ]; then
 
-	echo "URL params is empty. call update.sh <URL_FOR_DOWNLOAD_ARCHIVE_TAR_GZ>"
+	echo "URL params is empty. call update_server.sh <URL_FOR_DOWNLOAD_ARCHIVE_TAR_GZ>"
 	exit
 
 fi

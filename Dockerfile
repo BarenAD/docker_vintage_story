@@ -1,16 +1,20 @@
 FROM alpine:latest
 
-ENV SERVER_USER='vintagestory'
+ENV VS_SERVER_USER='vintagestory'
 
-ENV PROJECT_PATH="/var/vintage_story"
-ENV SERVER_PATH="${PROJECT_PATH}/server"
-ENV DATA_PATH="${PROJECT_PATH}/data"
-ENV SCRIPTS_PATH="/bin"
+ENV VS_BACKUPS_AGE_LIMIT=5				#days
+ENV VS_BACKUPS_DATE_FORMAT="%dd-%mm-%Y_%H:%M:%S"	#format date for backups
+ENV VS_BACKUP_PERIODICITY="0 0 * * *"			#crontab format value
 
-ENV SCREENING_PROJECT_PATH="\/var\/vintage_story"
-ENV SCREENING_SERVER_PATH="${SCREENING_PROJECT_PATH}\/server"
-ENV SCREENING_DATA_PATH="${SCREENING_PROJECT_PATH}\/data"
-ENV SCREENING_SCRIPTS_PATH="\/bin"
+ENV VS_PROJECT_PATH="/var/vintage_story"
+ENV VS_SERVER_PATH="${VS_PROJECT_PATH}/server"
+ENV VS_DATA_PATH="${VS_PROJECT_PATH}/data"
+ENV VS_SCRIPTS_PATH="/bin"
+
+ENV VS_SCREENING_PROJECT_PATH="\/var\/vintage_story"
+ENV VS_SCREENING_SERVER_PATH="${VS_SCREENING_PROJECT_PATH}\/server"
+ENV VS_SCREENING_DATA_PATH="${VS_SCREENING_PROJECT_PATH}\/data"
+ENV VS_SCREENING_SCRIPTS_PATH="\/bin"
 
 USER root
 
@@ -18,12 +22,12 @@ COPY ./dist/scripts.tar.gz /tmp/scripts.tar.gz
 
 WORKDIR /tmp
 
-RUN addgroup $SERVER_USER && adduser -D -G $SERVER_USER $SERVER_USER && mkdir -p $SERVER_PATH && mkdir -p $DATA_PATH && mkdir -p $SCRIPTS_PATH && tar -xzf /tmp/scripts.tar.gz -C $SCRIPTS_PATH && rm -rf /tmp/* && chown -R $SERVER_USER:$SERVER_USER $PROJECT_PATH && chmod -R +x $SCRIPTS_PATH/* && $SCRIPTS_PATH/vs_crontab && apk update --no-cache && apk --no-cache add supercronic bash procps tar screen wget gcompat aspnetcore7-runtime
+RUN addgroup $VS_SERVER_USER && adduser -D -G $VS_SERVER_USER $VS_SERVER_USER && mkdir -p $VS_SERVER_PATH && mkdir -p $VS_DATA_PATH && mkdir -p $VS_SCRIPTS_PATH && tar -xzf /tmp/scripts.tar.gz -C $VS_SCRIPTS_PATH && rm -rf /tmp/* && chown -R $VS_SERVER_USER:$VS_SERVER_USER $VS_PROJECT_PATH && chmod -R +x $VS_SCRIPTS_PATH/* && $VS_SCRIPTS_PATH/vs_crontab && apk update --no-cache && apk --no-cache add supercronic bash procps tar screen wget gcompat aspnetcore7-runtime
 
 #icu-libs krb5-libs libgcc libintl libstdc++ zlib libgdiplus openssl fontconfig busybox-suid
 
-USER $SERVER_USER
+USER $VS_SERVER_USER
 
-WORKDIR $SERVER_PATH
+WORKDIR $VS_SERVER_PATH
 
 ENTRYPOINT vs_startup

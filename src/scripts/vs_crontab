@@ -1,11 +1,11 @@
 #!/bin/sh
 
-echo "0 0 * * * bash vs_backup" >> /home/$SERVER_USER/crontab
+echo "${VS_BACKUP_PERIODICITY} bash vs_backup" >> /home/$VS_SERVER_USER/crontab
 
-#echo "* * * * * echo \"CRON IS RUNNING\" >> ~/cron_debug.txt" >> /home/$SERVER_USER/crontab
+#echo "* * * * * echo \"CRON IS RUNNING\" >> ~/cron_debug.txt" >> /home/$VS_SERVER_USER/crontab
 
-chown $SERVER_USER:$SERVER_USER /home/$SERVER_USER/crontab
+chown $VS_SERVER_USER:$VS_SERVER_USER /home/$VS_SERVER_USER/crontab
 
-chmod 660 /home/$SERVER_USER/crontab
+chmod 660 /home/$VS_SERVER_USER/crontab
 
 echo "Successfully updated crontab!"
