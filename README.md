@@ -16,7 +16,7 @@ Choose needed branch on git. (any - all versions, manual install server, check o
 
 ## REQUIREMENTS
 1) [Docker](https://docs.docker.com/engine/install)
-2) [VCS manager](https://github.com/BarenAD/docker_vintage_story/tree/vcs_manager) (optional)
+2) [VSC manager](https://github.com/BarenAD/docker_vintage_story/tree/vsc_manager) (optional)
 
 ## QUICK STARTING
 1) Run `vcs_manager install`
