@@ -19,9 +19,9 @@ Choose needed branch on git. (any - all versions, manual install server, check o
 2) [VSC manager](https://github.com/BarenAD/docker_vintage_story/tree/vsc_manager) (optional)
 
 ## QUICK STARTING
-1) Run `vsc_manager install`
+1) Run `vsc_manager container_install`
 2) Run `vsc_manager server_update`
-3) Run `vsc_manager restart`
+3) Run `vsc_manager container_restart`
 4) Done! Now you can connect to the server. Or make the settings and install the necessary mods.
 
 ## QUICK STARTING MANUAL
@@ -41,7 +41,7 @@ To simplify access to the server folders, you can create a link directly from th
 3) `server` - server directory, `data` - server data directory
 
 ## QUICK INSTALL MODS
-1) Run `vsc_manager mod_install`
+1) Run `vsc_manager server_mod_install`
 
 ## QUICK INSTALL MODS MANUAL
 1) Run `sudo docker exec -it vintage_story_server bash`
@@ -51,7 +51,7 @@ To simplify access to the server folders, you can create a link directly from th
 5) Restart container `sudo docker restart vintage_story_server`
 
 ## IMMEDIATE BACKUP
-1) Run `vsc_manager backup`
+1) Run `vsc_manager server_backup`
 
 ## IMMEDIATE BACKUP MANUAL
 1) Run `sudo docker exec -it vintage_story_server vs_backup`
@@ -61,7 +61,7 @@ To simplify access to the server folders, you can create a link directly from th
 2) Run `cd /var/lib/docker/volumes/vintage_story_server/_data/data/Backups`
 
 ### HOW TO GET INSIDE CONTAINER
-1) Run `vsc_manager attach`
+1) Run `vsc_manager container_attach`
 
 ### HOW TO GET INSIDE CONTAINER MANUAL
 1) Run `sudo docker exec -it vintage_story_server bash`
