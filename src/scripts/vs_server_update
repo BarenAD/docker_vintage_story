@@ -2,6 +2,8 @@
 
 #First param - server download link
 
+echo "Start updating server..."
+
 if [ -z "$1" ]; then
 
   read -p "Set URL_FOR_DOWNLOAD_ARCHIVE_TAR_GZ: " downloadUrl
@@ -11,8 +13,6 @@ if [ -z "$1" ]; then
   downloadUrl=$1
 
 fi
-
-echo "Start updating server..."
 
 if [ -f $VS_SERVER_PATH/server.sh ]; then
 
