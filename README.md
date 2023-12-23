@@ -10,7 +10,7 @@ This manager simplifies work this docker container!
 1) wget
 
 ## INSTALLATION
-1) `sudo wget -O /usr/local/bin/vsc_manager https://github.com/BarenAD/docker_vintage_story/releases/download/vsc_manager_1.0.0/vsc_manager && sudo chmod +x /usr/local/bin/vcs_manager`
+1) `sudo wget -O /usr/local/bin/vsc_manager https://github.com/BarenAD/docker_vintage_story/releases/download/vsc_manager_1.0.0/vsc_manager && sudo chmod +x /usr/local/bin/vsc_manager`
 
 ## REMOVE
 1) `sudo rm -f /usr/local/bin/vsc_manager`
