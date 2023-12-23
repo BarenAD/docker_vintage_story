@@ -4,8 +4,11 @@
 
 if [ -z "$1" ]; then
 
-	echo "URL params is empty. call update.sh <URL_FOR_DOWNLOAD_ARCHIVE_TAR_GZ>"
-	exit
+  read -p "Set URL_FOR_DOWNLOAD_ARCHIVE_TAR_GZ: " downloadUrl
+
+  else
+
+  downloadUrl=$1
 
 fi
 
@@ -25,7 +28,7 @@ rm -rf $VS_SERVER_PATH/*
 
 echo "Download server"
 
-wget -O /tmp/server.tar.gz $1
+wget -O /tmp/server.tar.gz downloadUrl
 
 echo "Extract server"
 
