@@ -10,9 +10,8 @@
 Choose needed branch on git. (any - all versions, manual install server, check only `.NET` version) or (specific version, automatically install)
 
 ## BASE PARAMS
-1) Count backups: 5 `see /src/scripts/vs_backup [countDays][6 line]`
-2) Frequency backups: every day 00:00 `see /src/scripts/vs_crontab [3 line]`
-3) Port: 42420
+1) Count backups: 5. For change - edit enviroment vairable `VS_BACKUPS_AGE_LIMIT` in container
+2) Frequency backups: every day 00:00. For change - edit enviroment vairable `VS_BACKUP_PERIODICITY` in container
 
 ## REQUIREMENTS
 1) [Docker](https://docs.docker.com/engine/install)
@@ -65,6 +64,10 @@ To simplify access to the server folders, you can create a link directly from th
 
 ### HOW TO GET INSIDE CONTAINER MANUAL
 1) Run `sudo docker exec -it vintage_story_server bash`
+
+### HOW EXTRACT BACKUP ARCHIVE
+1) Rename needed archive (remove all ':' from name)
+2) Run `tar -xvzf archive_name.tar.gz`
 
 # DEVELOPMENT
 
