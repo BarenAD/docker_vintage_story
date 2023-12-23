@@ -23,7 +23,7 @@ fi
 setUpParam() {
   param=$2
   if [ -z "$2" ]; then
-      read -p "Set $1: (default: $3) " param
+      read -p "Set $1 (default: $3): " param
   fi
   if [ -z "$param" ]; then
     param=$3
@@ -33,6 +33,7 @@ setUpParam() {
 
 install() {
   TZ=$(cat "/etc/timezone")
+  TZ=$(setUpParam "TimeZone" "$TZ" "Asia/Krasnoyarsk")
   sudo docker run -d --name vintage_story_server -p $2:$2 --restart=unless-stopped -e TZ=$TZ -v vintage_story_server:/var/vintage_story barenad/vintage_story_server:$1
   sudo docker ps -a
 }
