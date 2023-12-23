@@ -14,13 +14,15 @@ if [ -z "$1" ]; then
 
 fi
 
-fileName=$(wget --content-disposition $downloadUrl 2>&1 | grep "Saving to" --line-buffered | sed -r 's/Saving to: ‘(.*)’/\1/')
+fileName=$(wget --server-response -q -O - "$downloadUrl" 2>&1 | grep "Content-Disposition:" | tail -1 | awk -F"filename=" '{print $2}')
+fileName=$(echo $fileName | sed "s/\"//g")
+fileName=$(echo $fileName | sed "s/ /_/g")
 digitIndexes=$(echo $fileName | grep -aob '[[:digit:]]')
 digitFirstIndex=${digitIndexes%%:*}
 modName=$(echo $fileName | cut -b -$digitFirstIndex)
 
 echo "Checking exist files..."
-exsistMods=$(find "${pathToMods}/${modName}*" -print)
+exsistMods=$(find $pathToMods/$modName* -print)
 if [ -n "$exsistMods" ]; then
   echo "\033[1;33mATTENTION! You already have this mod installed!"
   echo "[\033[1;31m$modName\033[1;33m] Is this the correct name for the mod?"
@@ -33,11 +35,11 @@ if [ -n "$exsistMods" ]; then
   fi
   echo "\033[0mRemoving..."
   # shellcheck disable=SC2115
-  rm -rf "${pathToMods}/${modName}*"
+  rm -rf $pathToMods/$modName*
 fi
 
 echo "\033[0mDownloading..."
 
-wget -O "${pathToMods}/${fileName}" $downloadUrl
+wget -O $pathToMods/$fileName $downloadUrl
 
 echo "Mod is successfully installed!"
