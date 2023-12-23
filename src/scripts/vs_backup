@@ -9,15 +9,16 @@ bash vs_server command genbackup latest.vcbds
 echo "Avaiting backup..."
 
 res=1
-while [ $res -le 0 ]
+while [ $res -gt 0 ]
 do
-  backupSizeStart=$(stat --printf="%s" $tempBackupName)
+  backupSizeStart=$(stat -c %s $tempBackupName)
   sleep 5
-  backupSizeEnd=$(stat --printf="%s" $tempBackupName)
-  if [ $backupSizeStart -gt $backupSizeEnd ]; then
-      res=1
+  backupSizeEnd=$(stat -c %s $tempBackupName)
+  if [ $backupSizeStart -lt $backupSizeEnd ]; then
+        res=1
+      else
+        res=0
   fi
-  res=0
 done
 
 echo "Compress backup file..."
