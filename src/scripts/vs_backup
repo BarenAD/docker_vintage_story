@@ -1,18 +1,35 @@
 #!/bin/sh
 
-#First param - path to server
-#Second params - path to server data
+tempBackupName=$VS_DATA_PATH/Backups/latest.vcbds
 
-currentDate=$(date +$VS_BACKUPS_DATE_FORMAT)
-arhiveName="vs_server_backup_${currentDate}.tar.gz"
+checkBackupStatus()
+{
+  backupSizeStart=$(stat --printf="%s" $tempBackupName)
+  sleep 5
+  backupSizeEnd=$(stat --printf="%s" $tempBackupName)
+  if [ $backupSizeStart < $backupSizeEnd ]; then
+      return 1
+  fi
+  return 0;
+}
 
 echo "Start prepared backup server..."
 
-bash $VS_SERVER_PATH/server.sh command genbackup latest.vcbds
+bash vs_server command genbackup latest.vcbds
+
+echo "Avaiting backup..."
+
+res=1
+while [ $res > 0 ]
+do
+  res=$(checkBackupStatus)
+done
 
 echo "Compress backup file..."
 
-tar -zcvf $VS_DATA_PATH/Backups/$arhiveName $VS_DATA_PATH/Backups/latest.vcbds
+currentDate=$(date +$VS_BACKUPS_DATE_FORMAT)
+archiveName="vs_server_backup_${currentDate}.tar.gz"
+tar -zcvf $VS_DATA_PATH/Backups/$archiveName $tempBackupName
 
 echo "Cleanup old backups"
 
@@ -20,6 +37,6 @@ find $VS_DATA_PATH/Backups -type f -mtime +$VS_BACKUPS_AGE_LIMIT -print0 | xargs
 
 echo "Cleanup latest backup temp file"
 
-rm -f $VS_DATA_PATH/Backups/latest.vcbds
+rm -f $tempBackupName
 
 echo "Successfully backuped"

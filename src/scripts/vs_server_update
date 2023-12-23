@@ -28,7 +28,7 @@ rm -rf $VS_SERVER_PATH/*
 
 echo "Download server"
 
-wget -O /tmp/server.tar.gz downloadUrl
+wget -O /tmp/server.tar.gz $downloadUrl
 
 echo "Extract server"
 
