@@ -62,9 +62,13 @@ case $1 in
         sudo docker start vintage_story_server
         ;;
     "container_stop")
+        sudo docker exec -it vintage_story_server vs_server command autosavenow
+        sleep 5
         sudo docker stop vintage_story_server
         ;;
     "container_restart")
+        sudo docker exec -it vintage_story_server vs_server command autosavenow
+          sleep 5
         sudo docker restart vintage_story_server
         ;;
     "server_update")
