@@ -32,10 +32,14 @@ setUpParam() {
 }
 
 install() {
-  TZ=$(cat "/etc/timezone")
-  TZ=$(setUpParam "TimeZone" "$TZ" "Asia/Krasnoyarsk")
-  sudo docker run -d --name vintage_story_server -p $2:$2 --restart=unless-stopped -e TZ=$TZ -v vintage_story_server:/var/vintage_story barenad/vintage_story_server:$1
+  sudo docker run -d --name vintage_story_server -p $2:$2 --restart=unless-stopped -v vintage_story_server:/var/vintage_story barenad/vintage_story_server:$1
+  sudo docker exec -u root -it vintage_story_server apt install -y tzdata
   sudo docker ps -a
+}
+
+saveServer() {
+  sudo docker exec -it vintage_story_server vs_server command autosavenow
+  sleep 10
 }
 
 cleanup() {
@@ -62,19 +66,20 @@ case $1 in
         sudo docker start vintage_story_server
         ;;
     "container_stop")
-        sudo docker exec -it vintage_story_server vs_server command autosavenow
-        sleep 5
+        saveServer
         sudo docker stop vintage_story_server
         ;;
     "container_restart")
-        sudo docker exec -it vintage_story_server vs_server command autosavenow
-          sleep 5
+        saveServer
         sudo docker restart vintage_story_server
         ;;
     "server_update")
+        sudo docker exec -it vintage_story_server vs_server stop
+        sudo docker stop vintage_story_server
         sudo docker exec -u root -it vintage_story_server vs_server_update
         ;;
     "server_backup")
+        saveServer
         sudo docker exec -it vintage_story_server vs_backup
         ;;
     "server_mod_install")
@@ -84,6 +89,7 @@ case $1 in
         sudo docker exec -u root -it vintage_story_server bash
         ;;
     "container_cleanup")
+        saveServer
         cleanup $(setUpParam "image_tag" "$2" "any_net_7")
         ;;
     "server_status")
