@@ -5,15 +5,15 @@ scriptName="vsc_manager"
 if [ -z "$1" ]; then
 
   echo "This is VINTAGE STORY CONTAINER MANAGER!\nAwailable commands:"
-  echo "1) \033[0;35m$scriptName install <?image_tag> <?port>\033[0m - download image (if empty and start container)"
-  echo "2) \033[0;35m$scriptName start\033[0m - start container"
-  echo "3) \033[0;35m$scriptName stop\033[0m - stop container"
-  echo "4) \033[0;35m$scriptName restart\033[0m - restart container"
+  echo "1) \033[0;35m$scriptName container_install <?image_tag> <?port>\033[0m - download image (if empty and start container)"
+  echo "2) \033[0;35m$scriptName container_start\033[0m - start container"
+  echo "3) \033[0;35m$scriptName container_stop\033[0m - stop container"
+  echo "4) \033[0;35m$scriptName container_restart\033[0m - restart container"
   echo "5) \033[0;35m$scriptName server_update\033[0m - download new server version and install inside container"
-  echo "6) \033[0;35m$scriptName backup\033[0m - create new save backup"
-  echo "7) \033[0;35m$scriptName mod_install <?download_url>\033[0m - install mod into server inside container"
-  echo "8) \033[0;35m$scriptName attach\033[0m - go to inside container"
-  echo "9) \033[0;35m$scriptName cleanup <?image_tag>\033[0m - stop container, remove container, remove image"
+  echo "6) \033[0;35m$scriptName server_backup\033[0m - create new save backup"
+  echo "7) \033[0;35m$scriptName server_mod_install <?download_url>\033[0m - install mod into server inside container"
+  echo "8) \033[0;35m$scriptName container_attach\033[0m - go to inside container"
+  echo "9) \033[0;35m$scriptName container_cleanup <?image_tag>\033[0m - stop container, remove container, remove image"
   echo "10) \033[0;35m$scriptName server_status\033[0m - view status server"
 
   exit
@@ -54,34 +54,37 @@ cleanup() {
 }
 
 case $1 in
-    "install")
+    "container_install")
         install $(setUpParam "image_tag" "$2" "any_net_7") $(setUpParam "port" "$3" "42420")
         ;;
-    "start")
+    "container_start")
         sudo docker start vintage_story_server
         ;;
-    "stop")
+    "container_stop")
         sudo docker stop vintage_story_server
         ;;
-    "restart")
+    "container_restart")
         sudo docker restart vintage_story_server
         ;;
     "server_update")
         sudo docker exec -u root -it vintage_story_server vs_server_update
         ;;
-    "backup")
+    "server_backup")
         sudo docker exec -it vintage_story_server vs_backup
         ;;
-    "mod_install")
+    "server_mod_install")
         sudo docker exec -it vintage_story_server vs_mod_install "$2"
         ;;
-    "attach")
+    "container_attach")
         sudo docker exec -u root -it vintage_story_server bash
         ;;
-    "cleanup")
+    "container_cleanup")
         cleanup $(setUpParam "image_tag" "$2" "any_net_7")
         ;;
     "server_status")
         sudo docker exec -it vintage_story_server vs_server status
         ;;
+    *)
+      echo "\033[0;31mUnknown command!\033[0m"
+      ;;
 esac
