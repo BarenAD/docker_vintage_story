@@ -21,7 +21,8 @@ Choose needed branch on git. (any - all versions, manual install server, check o
 ## QUICK STARTING
 1) Run `vsc_manager install`
 2) Run `vsc_manager server_update`
-3) Done! Now you can connect to the server. Or make the settings and install the necessary mods.
+3) Run `vsc_manager restart`
+4) Done! Now you can connect to the server. Or make the settings and install the necessary mods.
 
 ## QUICK STARTING MANUAL
 1) Run `sudo docker run -d --name vintage_story_server -p 42420:42420 --restart=unless-stopped -e TZ=Asia/Novosibirsk -v vintage_story_server:/var/vintage_story barenad/vintage_story_server:any_net_7` (change to suit yourself: -p - server port, -e - TimeZone, see `/etc/timezone`)
