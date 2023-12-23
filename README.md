@@ -16,10 +16,16 @@ Choose needed branch on git. (any - all versions, manual install server, check o
 
 ## REQUIREMENTS
 1) [Docker](https://docs.docker.com/engine/install)
+2) [VCS manager](https://github.com/BarenAD/docker_vintage_story/tree/vcs_manager) (optional)
 
 ## QUICK STARTING
+1) Run `vcs_manager install`
+2) Run `vcs_manager server_update`
+3) Done! Now you can connect to the server. Or make the settings and install the necessary mods.
+
+## QUICK STARTING MANUAL
 1) Run `sudo docker run -d --name vintage_story_server -p 42420:42420 --restart=unless-stopped -e TZ=Asia/Novosibirsk -v vintage_story_server:/var/vintage_story barenad/vintage_story_server:any_net_7` (change to suit yourself: -p - server port, -e - TimeZone, see `/etc/timezone`)
-2) If you first time run command then run `sudo docker exec vintage_story_server bash -c "vs_update <full_url_download_server_archive_tar>"` ATTENTION! replace [full_url_download_server_archive_tar](https://account.vintagestory.at/) to choose needed version game server url (Linux tar.gz server only) (expand `(Show all available downloads and mirrors of Vintage Story)` right mouse button and copy the url link)
+2) If you first time run command then run `sudo docker exec -it vintage_story_server vs_server_update <?full_url_download_server_archive_tar>"` ATTENTION! replace [full_url_download_server_archive_tar](https://account.vintagestory.at/) to choose needed version game server url (Linux tar.gz server only) (expand `(Show all available downloads and mirrors of Vintage Story)` right mouse button and copy the url link)
 3) Run `sudo docker restart vintage_story_server`
 4) Done! Now you can connect to the server. Or make the settings and install the necessary mods.
 
@@ -28,12 +34,15 @@ To simplify access to the server folders, you can create a link directly from th
 1) Run `sudo ln -s /var/lib/docker/volumes /root/docker_volumes`
 2) Done! Now you can replace all paths `/var/lib/docker/volumes` -> `~/docker_volumes` (root user)
 
-## How to get to the volume (server directories)
+## GO TO SERVER PATH
 1) Run `su -` (change to root user)
 2) Run `cd /var/lib/docker/volumes/vintage_story_server/_data`
 3) `server` - server directory, `data` - server data directory
 
 ## QUICK INSTALL MODS
+1) Run `vcs_manager mod_install`
+
+## QUICK INSTALL MODS MANUAL
 1) Run `sudo docker exec -it vintage_story_server bash`
 2) Run `cd /var/vintage_story/data/Mods`
 3) Run `wget -O <name_archive.zip> <full_url_download_mod>` ATTENTION! replace [full_url_download_server_archive_tar](https://mods.vintagestory.at/list/mod) and [name_archive.zip] to choose needed mod (repeat for all mods)
@@ -41,6 +50,9 @@ To simplify access to the server folders, you can create a link directly from th
 5) Restart container `sudo docker restart vintage_story_server`
 
 ## IMMEDIATE BACKUP
+1) Run `vcs_manager backup`
+
+## IMMEDIATE BACKUP MANUAL
 1) Run `sudo docker exec -it vintage_story_server vs_backup`
 
 ## WHERE PLACED BACKUPS
@@ -48,6 +60,9 @@ To simplify access to the server folders, you can create a link directly from th
 2) Run `cd /var/lib/docker/volumes/vintage_story_server/_data/data/Backups`
 
 ### HOW TO GET INSIDE CONTAINER
+1) Run `vcs_manager attach`
+
+### HOW TO GET INSIDE CONTAINER MANUAL
 1) Run `sudo docker exec -it vintage_story_server bash`
 
 # DEVELOPMENT
