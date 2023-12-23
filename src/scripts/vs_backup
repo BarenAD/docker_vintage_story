@@ -7,7 +7,7 @@ checkBackupStatus()
   backupSizeStart=$(stat --printf="%s" $tempBackupName)
   sleep 5
   backupSizeEnd=$(stat --printf="%s" $tempBackupName)
-  if [ $backupSizeStart < $backupSizeEnd ]; then
+  if [ $backupSizeStart -gt $backupSizeEnd ]; then
       return 1
   fi
   return 0;
@@ -20,7 +20,7 @@ bash vs_server command genbackup latest.vcbds
 echo "Avaiting backup..."
 
 res=1
-while [ $res > 0 ]
+while [ $res -le 0 ]
 do
   res=$(checkBackupStatus)
 done
