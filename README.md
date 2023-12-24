@@ -29,6 +29,14 @@ Choose needed branch on git. (any - all versions, manual install server, check o
 3) Run `sudo docker restart vintage_story_server`
 4) Done! Now you can connect to the server. Or make the settings and install the necessary mods.
 
+## HOW UPDATED MANUAL
+1) Run `su -`
+2) Run `cd /var/lib/docker/volumes/vintage_story/_data/server`
+3) Run `wget -O server.tar.gz [PASTE_DOWNLOAD_URL]` or download and move archive manual (For example: scp)
+4) Run `tar -xzf server.tar.gz`
+5) Run `chmod +x ./server.sh`
+6) Change `server.sh` parameters: `VSPATH='/var/vintage_story/server'`, `DATAPATH='/var/vintage_story/data'`
+
 ## LINK TO VOLUMES
 To simplify access to the server folders, you can create a link directly from the root directory of the user
 1) Run `sudo ln -s /var/lib/docker/volumes /root/docker_volumes`
@@ -76,14 +84,6 @@ To simplify access to the server folders, you can create a link directly from th
 2) Run `build.sh`
 3) Run `start.sh`
 4) If you first started then run `update_server.sh <full_url_download_server_archive_tar>` ATTENTION! replace [full_url_download_server_archive_tar](https://account.vintagestory.at/) to choose needed version game server url (Linux tar.gz server only) (expand `(Show all available downloads and mirrors of Vintage Story)` right mouse button and copy the url link)
-
-## HOW UPDATED MANUAL
-1) Run `su -`
-2) Run `cd /var/lib/docker/volumes/vintage_story/_data/server`
-3) Run `wget -O server.tar.gz [PASTE_DOWNLOAD_URL]` or download and move archive manual (For example: scp)
-4) Run `tar -xzf server.tar.gz`
-5) Run `chmod +x ./server.sh`
-6) Change `server.sh` parameters: `VSPATH='/var/vintage_story/server'`, `DATAPATH='/var/vintage_story/data'`
 
 ### HOW TO GET INSIDE CONTAINER
 1) Run `attach.sh`
