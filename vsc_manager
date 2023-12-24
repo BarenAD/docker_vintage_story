@@ -1,20 +1,29 @@
-#!/bin/sh
+#!/bin/bash
 
+version="1.1.0"
 scriptName="vsc_manager"
+
+C_NULL="\e[0m"
+C_CYAN="\e[36m"
+C_RED="\e[31m"
+C_YELLOW="\e[1;33m"
 
 if [ -z "$1" ]; then
 
-  echo "This is VINTAGE STORY CONTAINER MANAGER!\nAwailable commands:"
-  echo "1) \033[0;35m$scriptName container_install <?image_tag> <?port>\033[0m - download image (if empty and start container)"
-  echo "2) \033[0;35m$scriptName container_start\033[0m - start container"
-  echo "3) \033[0;35m$scriptName container_stop\033[0m - stop container"
-  echo "4) \033[0;35m$scriptName container_restart\033[0m - restart container"
-  echo "5) \033[0;35m$scriptName server_update\033[0m - download new server version and install inside container"
-  echo "6) \033[0;35m$scriptName server_backup\033[0m - create new save backup"
-  echo "7) \033[0;35m$scriptName server_mod_install <?download_url>\033[0m - install mod into server inside container"
-  echo "8) \033[0;35m$scriptName container_attach\033[0m - go to inside container"
-  echo "9) \033[0;35m$scriptName container_cleanup <?image_tag>\033[0m - stop container, remove container, remove image"
-  echo "10) \033[0;35m$scriptName server_status\033[0m - view status server"
+  echo -e "This is VINTAGE STORY CONTAINER MANAGER!"
+  echo -e "$C_YELLOW VERSION: $version $C_NULL"
+  echo "Awailable commands:"
+  echo -e "1) $C_CYAN$scriptName container_install <?image_tag> <?port>$C_NULL - download image (if empty and start container)"
+  echo -e "2) $C_CYAN$scriptName container_start$C_NULL - start container"
+  echo -e "3) $C_CYAN$scriptName container_stop$C_NULL - stop container"
+  echo -e "4) $C_CYAN$scriptName container_restart$C_NULL - restart container"
+  echo -e "5) $C_CYAN$scriptName server_update$C_NULL - download new server version and install inside container"
+  echo -e "6) $C_CYAN$scriptName server_backup$C_NULL - create new save backup"
+  echo -e "7) $C_CYAN$scriptName server_mod_install <?download_url>$C_NULL - install mod into server inside container"
+  echo -e "8) $C_CYAN$scriptName container_attach$C_NULL - go to inside container"
+  echo -e "9) $C_CYAN$scriptName container_cleanup <?image_tag>$C_NULL - stop container, remove container, remove image"
+  echo -e "10) $C_CYAN$scriptName server_status$C_NULL - view status server"
+  echo -e "11) $C_CYAN$scriptName server_restart$C_NULL - restart server"
 
   exit
 fi
@@ -28,11 +37,36 @@ setUpParam() {
   if [ -z "$param" ]; then
     param=$3
   fi
-  echo "$param"
+  echo -e "$param"
+}
+
+#$1 - array ref $2 - param name ; $3 - example value
+setUpArrayParams() {
+  local -n res=$1
+  agree="y"
+  while [[ $agree == "y" ]]
+  do
+    read -p "Do you want to add another one $2? (Press ENTER for skip or type 'y' for continue): " agree
+    if [[ $agree == "y" ]]; then
+      read -p "Set $2 param (example: $3): " newValue
+      res+=( $newValue )
+    fi
+  done
 }
 
 install() {
-  sudo docker run -d --name vintage_story_server -p $2:$2 --restart=unless-stopped -v vintage_story_server:/var/vintage_story barenad/vintage_story_server:$1
+  local ports
+  setUpArrayParams ports "port" "42420"
+  declare -p ports
+  strPorts=""
+  for port in "${ports[@]}"
+  do
+    strPorts+="-p $port:$port "
+  done
+  strPorts+="-p $2:$2"
+  echo $strPorts
+
+  sudo docker run -d --name vintage_story_server $strPorts --restart=unless-stopped -v vintage_story_server:/var/vintage_story barenad/vintage_story_server:$1
   sudo docker exec -u root -it vintage_story_server apt install -y tzdata
   sudo docker ps -a
 }
@@ -94,7 +128,11 @@ case $1 in
     "server_status")
         sudo docker exec -it vintage_story_server vs_server status
         ;;
+    "server_restart")
+        saveServer
+        sudo docker exec -it vintage_story_server vs_server restart
+        ;;
     *)
-      echo "\033[0;31mUnknown command!\033[0m"
+      echo -e "$C_RED Unknown command!$C_NULL"
       ;;
 esac
