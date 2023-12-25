@@ -1,13 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
-pathToCrontab="/home/${VS_SERVER_USER}/crontab"
+echo "${VS_BACKUP_PERIODICITY} bash vs_backup" >> $VS_CRONTAB_PATH
 
-echo "${VS_BACKUP_PERIODICITY} bash vs_backup" >> $pathToCrontab
+#echo "* * * * * echo \"CRON IS RUNNING\" >> ~/cron_debug.txt" >> $VS_CRONTAB_PATH
 
-#echo "* * * * * echo \"CRON IS RUNNING\" >> ~/cron_debug.txt" >> $pathToCrontab
+chown $VS_SERVER_USER:$VS_SERVER_USER $VS_CRONTAB_PATH
 
-chown $VS_SERVER_USER:$VS_SERVER_USER $pathToCrontab
-
-chmod 660 $pathToCrontab
+chmod 660 $VS_CRONTAB_PATH
 
 echo "Successfully updated crontab!"

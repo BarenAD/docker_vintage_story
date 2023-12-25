@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ -f ./dist/scripts.tar.gz ]; then
 

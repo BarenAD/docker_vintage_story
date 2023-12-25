@@ -1,8 +1,16 @@
-#!/bin/sh
+#!/bin/bash
 
 tempBackupName=$VS_DATA_PATH/Backups/latest.vcbds
 
-echo "Start prepared backup server..."
+echo "Start backup server..."
+
+echo "Saving world..."
+
+bash vs_server command autosavenow
+
+sleep 10
+
+echo "Prepared backup..."
 
 bash vs_server command genbackup latest.vcbds
 

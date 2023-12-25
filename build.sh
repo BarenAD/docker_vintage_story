@@ -1,10 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 
 mkdir -p dist
 
 echo "Preparing..."
 
-sh ./src/prepare.sh
+bash ./src/prepare.sh
 
 echo "Cleanup image..."
 

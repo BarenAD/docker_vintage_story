@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "Start installing mod..."
 
@@ -18,27 +18,44 @@ fileName=$(wget --server-response -q -O - "$downloadUrl" 2>&1 | grep "Content-Di
 fileName=$(echo $fileName | sed "s/\"//g")
 fileName=$(echo $fileName | sed "s/ /_/g")
 digitIndexes=$(echo $fileName | grep -aob '[[:digit:]]')
-digitFirstIndex=${digitIndexes%%:*}
-modName=$(echo $fileName | cut -b -$digitFirstIndex)
+
+if [[ -z "$digitIndexes" ]]; then
+
+    modName=$fileName
+
+  else
+
+    digitFirstIndex=${digitIndexes%%:*}
+    modName=$(echo $fileName | cut -b -$digitFirstIndex)
+
+fi
+
+
+if [[ -z "$fileName" || -z "$modName" ]]; then
+
+  echo -e "\e[31m Error! fileName=(${fileName}) or modName=(${modName}) is empty! Perhaps the server with mods did not respond correctly, try again!\e[0m"
+  exit
+
+fi
 
 echo "Checking exist files..."
 exsistMods=$(find $pathToMods/$modName* -print)
 if [ -n "$exsistMods" ]; then
-  echo "\033[1;33mATTENTION! You already have this mod installed!"
-  echo "[\033[1;31m$modName\033[1;33m] Is this the correct name for the mod?"
-  echo "These files will be deleted!\n$exsistMods"
-  echo "CONTINUE? Press \033[1;31my\033[1;33m for continue or \033[1;31mENTER\033[1;33m / \033[1;31mn\033[1;33m for exit\033[1;31m"
+  echo -e "\033[1;33mATTENTION! You already have this mod installed!"
+  echo -e "[\033[1;31m$modName\033[1;33m] Is this the correct name for the mod (name with not version)?"
+  echo -e "These files will be deleted!\n$exsistMods"
+  echo -e "CONTINUE? Press \033[1;31my\033[1;33m for continue or \033[1;31mENTER\033[1;33m / \033[1;31mn\033[1;33m for exit\033[1;31m"
   read agree
   if [ "y" != "$agree" ]; then
-    echo "\033[0mYou have interrupted the installation process. EXIT!"
+    echo -e "\033[0mYou have interrupted the installation process. EXIT!"
     exit
   fi
-  echo "\033[0mRemoving..."
+  echo -e "\033[0mRemoving..."
   # shellcheck disable=SC2115
   rm -rf $pathToMods/$modName*
 fi
 
-echo "\033[0mDownloading..."
+echo -e "\033[0mDownloading..."
 
 wget -O $pathToMods/$fileName $downloadUrl
 

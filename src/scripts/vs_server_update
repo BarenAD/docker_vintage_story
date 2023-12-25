@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #First param - server download link
 
@@ -18,7 +18,7 @@ if [ -f $VS_SERVER_PATH/server.sh ]; then
 
 	echo "Stopping server..."
 
-	bash $VS_SERVER_PATH/server.sh stop
+	bash vs_server stop
 
 fi
 
