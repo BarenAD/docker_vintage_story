@@ -1,12 +1,13 @@
 #!/bin/bash
 
-version="1.1.0"
+version="1.2.0"
 scriptName="vsc_manager"
 
 C_NULL="\e[0m"
 C_CYAN="\e[36m"
 C_RED="\e[31m"
 C_YELLOW="\e[1;33m"
+WARN_PREFIX="[SERVER]:"
 
 # ';' - description separator
 # '#' - params separator
@@ -20,6 +21,7 @@ COMMANDS=(
   "server_restart;- restart server"
   "server_status;- view status server"
   "server_backup;- create new save backup"
+  "server_warn#<message>;- send warning into server"
   "server_update#<?download_url>;- download new server version and install inside container"
   "server_mod_install#<?download_url>;- install mod into server inside container"
   "auto_complete;- generate an autofill file (helps you enter commands on the (TAB) key)"
@@ -119,6 +121,10 @@ cleanup() {
   echo "Successfully completed!"
 }
 
+warn() {
+  sudo docker exec -it vintage_story_server vs_server command announce "$WARN_PREFIX $1"
+}
+
 setUpAutoComplete() {
   sudo bash -c "echo '_auto_complete(){ _script_commands=\$(vsc_manager --commands);local cur;COMPREPLY=();cur=\"\${COMP_WORDS[COMP_CWORD]}\";COMPREPLY=( \$(compgen -W \"\${_script_commands}\" -- \${cur}) );return 0' > /etc/bash_completion.d/vsc_manager"
   sudo bash -c "echo '}; complete -o nospace -F _auto_complete vsc_manager' >> /etc/bash_completion.d/vsc_manager"
@@ -147,10 +153,14 @@ case $1 in
         ;;
     "container_stop")
         saveServer
+        warn "Attention, the server will restart in 30 seconds!"
+        sleep 30
         sudo docker stop vintage_story_server
         ;;
     "container_restart")
         saveServer
+        warn "Attention, the server will restart in 30 seconds!"
+        sleep 30
         sudo docker restart vintage_story_server
         ;;
     "server_update")
@@ -176,7 +186,12 @@ case $1 in
         ;;
     "server_restart")
         saveServer
+        warn "Attention, the server will restart in 30 seconds!"
+        sleep 30
         sudo docker exec -it vintage_story_server vs_server restart
+        ;;
+    "server_warn")
+        warn "$2"
         ;;
     *)
       echo -e "$C_RED Unknown command!$C_NULL"
