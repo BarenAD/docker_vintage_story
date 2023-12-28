@@ -16,3 +16,6 @@ This manager simplifies work this docker container!
 
 ## REMOVE
 1) `sudo rm -f /usr/local/bin/vsc_manager`
+
+## UPDATE
+1) `sudo rm -f /usr/local/bin/vsc_manager && sudo wget -O /usr/local/bin/vsc_manager https://github.com/BarenAD/docker_vintage_story/releases/latest/download/vsc_manager && sudo chmod +x /usr/local/bin/vsc_manager`
