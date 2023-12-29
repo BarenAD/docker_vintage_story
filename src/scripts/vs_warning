@@ -2,4 +2,4 @@
 
 PREFIX="[SERVER]:"
 
-vs_server command autosavenow "$PREFIX $1"
+vs_server command announce "$PREFIX $1"
