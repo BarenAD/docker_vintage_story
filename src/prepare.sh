@@ -1,12 +1,11 @@
 #!/bin/bash
 
-if [ -f ./dist/scripts.tar.gz ]; then
-
-	echo "Cleanup scripts"
-
-	rm ./dist/scripts.tar.gz
-
+if [ -d "./dist" ]; then
+  echo "Cleanup dist"
+  sudo rm -R ./dist
 fi
+
+mkdir ./dist
 
 echo "Create scripts archive"
 
