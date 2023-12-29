@@ -5,7 +5,7 @@
 
 # V 1.3.0
 
-# VCS MANAGER
+# VSC MANAGER
 This manager simplifies work this docker container!
 
 ## REQUIREMENTS
