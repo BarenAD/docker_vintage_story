@@ -3,7 +3,7 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/BarenAD/docker_vintage_story)
 ![GitHub issues](https://img.shields.io/github/issues/BarenAD/docker_vintage_story)
 
-# V 1.2.0
+# V 1.3.0
 
 # VCS MANAGER
 This manager simplifies work this docker container!
