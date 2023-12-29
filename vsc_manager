@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version="1.2.0"
+version="1.3.0"
 scriptName="vsc_manager"
 
 C_NULL="\e[0m"
@@ -11,12 +11,15 @@ C_YELLOW="\e[1;33m"
 # ';' - description separator
 # '#' - params separator
 COMMANDS=(
+  "update;- update vsc_manager to latest version"
   "container_install#<?image_tag> <?port>;- download image (if empty and start container)"
   "container_start;- start container"
   "container_stop;- stop container"
   "container_restart;- restart container"
   "container_attach;- go to inside container"
   "container_cleanup#<?image_tag>;- stop container, remove container, remove image"
+  "server_stop;- stop server"
+  "server_start;- start server"
   "server_restart;- restart server"
   "server_status;- view status server"
   "server_backup;- create new save backup"
@@ -120,13 +123,24 @@ cleanup() {
   echo "Successfully completed!"
 }
 
-warn() {
+serverWarn() {
   sudo docker exec -it vintage_story_server vs_warning "$1"
 }
 
 setUpAutoComplete() {
   sudo bash -c "echo '_auto_complete(){ _script_commands=\$(vsc_manager --commands);local cur;COMPREPLY=();cur=\"\${COMP_WORDS[COMP_CWORD]}\";COMPREPLY=( \$(compgen -W \"\${_script_commands}\" -- \${cur}) );return 0' > /etc/bash_completion.d/vsc_manager"
   sudo bash -c "echo '}; complete -o nospace -F _auto_complete vsc_manager' >> /etc/bash_completion.d/vsc_manager"
+}
+
+updateVscManager() {
+  sudo wget -O /tmp/vsc_manager https://github.com/BarenAD/docker_vintage_story/releases/latest/download/vsc_manager && sudo chmod +x /tmp/vsc_manager && sudo rm -f /usr/local/bin/vsc_manager && sudo mv /tmp/vsc_manager /usr/local/bin/vsc_manager
+}
+
+serverStop() {
+  serverWarn "Attention, the server will restart in 50 seconds!"
+  saveServer
+  sleep 30
+  sudo docker exec -it vintage_story_server vs_server stop
 }
 
 if [ ! -f /etc/bash_completion.d/vsc_manager ]; then
@@ -141,6 +155,9 @@ case $1 in
     "--commands")
         helpOnlyCommand
         ;;
+    "update")
+        updateVscManager
+        ;;
     "auto_complete")
         setUpAutoComplete
         ;;
@@ -151,24 +168,12 @@ case $1 in
         sudo docker start vintage_story_server
         ;;
     "container_stop")
-        saveServer
-        warn "Attention, the server will restart in 30 seconds!"
-        sleep 30
+        serverStop
         sudo docker stop vintage_story_server
         ;;
     "container_restart")
-        saveServer
-        warn "Attention, the server will restart in 30 seconds!"
-        sleep 30
+        serverStop
         sudo docker restart vintage_story_server
-        ;;
-    "server_update")
-        sudo docker exec -it vintage_story_server vs_server stop
-        sudo docker exec -u root -it vintage_story_server vs_server_update
-        ;;
-    "server_backup")
-        saveServer
-        sudo docker exec -it vintage_story_server vs_backup
         ;;
     "server_mod_install")
         sudo docker exec -it vintage_story_server vs_mod_install "$2"
@@ -183,14 +188,28 @@ case $1 in
     "server_status")
         sudo docker exec -it vintage_story_server vs_server status
         ;;
+    "server_start")
+        sudo docker exec -it vintage_story_server vs_server start
+        ;;
+    "server_stop")
+        serverStop
+        ;;
     "server_restart")
         saveServer
-        warn "Attention, the server will restart in 30 seconds!"
+        serverWarn "Attention! the server will restart in 40 seconds!"
         sleep 30
         sudo docker exec -it vintage_story_server vs_server restart
         ;;
     "server_warn")
-        warn "$2"
+        serverWarn "$2"
+        ;;
+    "server_update")
+        sudo docker exec -it vintage_story_server vs_server stop
+        sudo docker exec -u root -it vintage_story_server vs_server_update
+        ;;
+    "server_backup")
+        saveServer
+        sudo docker exec -it vintage_story_server vs_backup
         ;;
     *)
       echo -e "$C_RED Unknown command!$C_NULL"
