@@ -4,6 +4,8 @@ tempBackupName=$VS_DATA_PATH/Backups/latest.vcbds
 
 echo "Start backup server..."
 
+bash vs_warning "Creating a backup of the world..."
+
 echo "Saving world..."
 
 bash vs_server command autosavenow
@@ -42,5 +44,7 @@ find $VS_DATA_PATH/Backups -type f -mtime +$VS_BACKUPS_AGE_LIMIT -print0 | xargs
 echo "Cleanup latest backup temp file"
 
 rm -f $tempBackupName
+
+bash vs_warning "The backup of the world has been successfully created."
 
 echo "Successfully backuped"

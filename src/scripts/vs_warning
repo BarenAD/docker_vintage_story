@@ -1,0 +1,5 @@
+#!/bin/bash
+
+PREFIX="[SERVER]:"
+
+vs_server command autosavenow "$PREFIX $1"
