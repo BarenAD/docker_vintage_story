@@ -1,0 +1,32 @@
+#!/bin/bash
+
+countDaysStoreBackups=10
+SSHServerUser="vintagestory"
+SSHServerHost="www.host.ru"
+SSHServerPort=22
+SSHCommandBody="$SSHServerPort $SSHServerUser@$SSHServerHost"
+
+pathRemoteBackups="/var/vintage_story/data/Backups"
+pathCurrentBackups="/mnt/hdd/backups/vintage_story"
+
+echo "Start synchronize backups for remote storage"
+
+echo "Get remote list backups"
+
+remoteBackupsList=$(ssh -p $SSHCommandBody "cd $pathRemoteBackups && ls *.tar.gz")
+
+echo "Synchronize backups..."
+
+for entry in $remoteBackupsList
+do
+  if [ ! -f $pathCurrentBackups/$entry ]; then
+      echo "downloading: $entry"
+      scp -P $SSHCommandBody:$pathRemoteBackups/$entry $pathCurrentBackups/$entry
+  fi
+done
+
+echo "Cleanup old backups"
+
+find $pathCurrentBackups -type f -mtime +$countDaysStoreBackups -print0 | xargs -0 rm -f
+
+echo "Successfully synchronized backups"
