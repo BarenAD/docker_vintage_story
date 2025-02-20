@@ -1,6 +1,6 @@
 #!/bin/bash
 
-tempBackupName=$VS_DATA_PATH/Backups/latest.vcbds
+tempBackupName=$VS_DATA_PATH/Backups/latest.vcdbs
 
 echo "Start backup server..."
 
@@ -14,7 +14,7 @@ sleep 10
 
 echo "Prepared backup..."
 
-bash vs_server command genbackup latest.vcbds
+bash vs_server command genbackup latest.vcdbs
 
 echo "Avaiting backup..."
 
